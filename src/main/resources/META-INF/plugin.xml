@@ -2,17 +2,11 @@
 <idea-plugin>
     <id>com.github.thencuber.intellijlinterplugin</id>
     <name>IntelliJ IDEA Linter Plugin</name>
-    <vendor>Noah Bühlmann</vendor>
+    <vendor url="https://github.com/TheNCuber">Noah Bühlmann</vendor>
 
-    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.thencuber.intellijlinterplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.thencuber.intellijlinterplugin.services.MyProjectService"/>
+        <annotator language="JAVA" implementationClass="com.github.thencuber.intellijlinterplugin.inspection.SimpleAnnotator"/>
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.thencuber.intellijlinterplugin.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>
