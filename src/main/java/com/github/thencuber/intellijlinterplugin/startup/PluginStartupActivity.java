@@ -1,17 +1,9 @@
 package com.github.thencuber.intellijlinterplugin.startup;
 
-import com.github.thencuber.intellijlinterplugin.inspection.MasterAnnotator;
+import com.github.thencuber.intellijlinterplugin.inspection.AnnotatorInformation;
+import com.github.thencuber.intellijlinterplugin.inspection.StorageService;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
-import com.intellij.lang.LanguageAnnotators;
-import com.intellij.lang.LanguageExtensionPoint;
-import com.intellij.lang.annotation.Annotator;
-import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.extensions.PluginDescriptor;
-import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.extensions.DefaultPluginDescriptor;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.jetbrains.annotations.NotNull;
@@ -30,42 +22,20 @@ public class PluginStartupActivity implements com.intellij.openapi.startup.Start
     @Override
     public void runActivity(@NotNull Project project) {
         System.out.println("Project plugin loaded");
+        StorageService projectService = project.getService(StorageService.class);
         ArrayList<AnnotatorInformation> AnnotatorInformationList = readConfig(project);
+        projectService.setAnnotatorInformation(AnnotatorInformationList);
+        System.out.println("Stored information");
 
-        if(AnnotatorInformationList.size() > 0) {
-            for (int i = 0; i < AnnotatorInformationList.size(); i++) {
-                PluginDescriptor MyPluginDescriptor = new DefaultPluginDescriptor(PluginId.getId("com.github.thencuber.intellijlinterplugin"), MasterAnnotator.class.getClassLoader());
-                LanguageExtensionPoint<Annotator> extension = new LanguageExtensionPoint<Annotator>("JAVA", new MasterAnnotator(AnnotatorInformationList.get(i).Severity, AnnotatorInformationList.get(i).Pattern, AnnotatorInformationList.get(i).Note));
-                extension.setPluginDescriptor(MyPluginDescriptor);
-                ApplicationManager.getApplication().getExtensionArea().getExtensionPoint(LanguageAnnotators.EP_NAME).registerExtension(extension,Disposer.newDisposable());
-                System.out.println("Annotator registered");
-            }
-        }
-    }
-
-    public class AnnotatorInformation {
-        public java.util.regex.Pattern Pattern;
-        public String Note;
-        public HighlightSeverity Severity;
-
-        AnnotatorInformation(String RegexPatternString, String Note, String Severity) {
-            this.Pattern = java.util.regex.Pattern.compile(RegexPatternString);
-            this.Note = Note;
-            switch (Severity) {
-                case "ERROR":
-                    this.Severity = HighlightSeverity.ERROR;
-                    break;
-                case "WARNING":
-                    this.Severity = HighlightSeverity.WARNING;
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + Severity);
-            }
-        }
-
-        public Boolean checkMatch(String input) {
-            return input.matches(this.Pattern.pattern());
-        }
+//        if(AnnotatorInformationList.size() > 0) {
+//            for (int i = 0; i < AnnotatorInformationList.size(); i++) {
+//                PluginDescriptor MyPluginDescriptor = new DefaultPluginDescriptor(PluginId.getId("com.github.thencuber.intellijlinterplugin"), MasterAnnotator.class.getClassLoader());
+//                LanguageExtensionPoint<Annotator> extension = new LanguageExtensionPoint<Annotator>("JAVA", new MasterAnnotator());
+//                extension.setPluginDescriptor(MyPluginDescriptor);
+//                ApplicationManager.getApplication().getExtensionArea().getExtensionPoint(LanguageAnnotators.EP_NAME).registerExtension(extension,Disposer.newDisposable());
+//                System.out.println("Annotator registered");
+//            }
+//        }
     }
 
     private ArrayList<AnnotatorInformation> readConfig(@NotNull final Project project) {
@@ -101,7 +71,7 @@ public class PluginStartupActivity implements com.intellij.openapi.startup.Start
                 return new ArrayList<AnnotatorInformation>();
             }
         } else {
-            System.out.println("Did not find " + configPath.toString());
+            System.out.println("Did not find " + configPath);
             return new ArrayList<AnnotatorInformation>();
         }
     }

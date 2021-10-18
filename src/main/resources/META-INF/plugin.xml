@@ -8,6 +8,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="com.github.thencuber.intellijlinterplugin.startup.PluginStartupActivity"/>
-        <!--<annotator language="JAVA" implementationClass="com.github.thencuber.intellijlinterplugin.inspection.MasterAnnotator"/>-->
+        <annotator language="JAVA" implementationClass="com.github.thencuber.intellijlinterplugin.inspection.MasterAnnotator"/>
     </extensions>
 </idea-plugin>
