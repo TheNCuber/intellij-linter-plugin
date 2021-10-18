@@ -8,11 +8,19 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLiteralExpression;
 import org.jetbrains.annotations.NotNull;
+import java.util.regex.Pattern;
 
-public class SimpleAnnotator implements Annotator {
+public class MasterAnnotator implements Annotator {
 
-    // Define strings for the Simple language prefix - used for annotations, line markers, etc.
-    public static final String SEARCH_STRING = "Hello World";
+    private final HighlightSeverity SEVERITY;
+    private final Pattern PATTERN;
+    private final String NOTE;
+
+    public MasterAnnotator(HighlightSeverity severity, Pattern pattern, String note) {
+        SEVERITY = severity;
+        PATTERN = pattern;
+        NOTE = note;
+    }
 
     @Override
     public void annotate(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
@@ -21,10 +29,10 @@ public class SimpleAnnotator implements Annotator {
             return;
         }
 
-        // Ensure the Psi element contains a string that contains the search string
+        // Ensure the Psi element contains a string and matches
         PsiLiteralExpression literalExpression = (PsiLiteralExpression) element;
         String value = literalExpression.getValue() instanceof String ? (String) literalExpression.getValue() : null;
-        if ((value == null) || !value.contains(SEARCH_STRING)) {
+        if ((value == null) || !value.matches(PATTERN.pattern())) {
             return;
         }
 
@@ -32,7 +40,7 @@ public class SimpleAnnotator implements Annotator {
         TextRange stringRange = TextRange.from(element.getTextRange().getStartOffset(), element.getTextLength());
 
         // highlight psi element
-        holder.newAnnotation(HighlightSeverity.ERROR, "You used 'Hello World' in a literal.")
+        holder.newAnnotation(SEVERITY, NOTE)
             .range(stringRange)
             .create();
     }
