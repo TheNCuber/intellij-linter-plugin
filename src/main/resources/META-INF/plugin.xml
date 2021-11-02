@@ -8,6 +8,11 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="com.github.thencuber.intellijlinterplugin.startup.PluginStartupActivity"/>
-        <annotator language="JAVA" implementationClass="com.github.thencuber.intellijlinterplugin.inspection.MasterAnnotator"/>
+        <annotator language="JAVA"
+                   implementationClass="com.github.thencuber.intellijlinterplugin.inspection.MasterAnnotator"/>
     </extensions>
+    <applicationListeners>
+        <listener class="com.github.thencuber.intellijlinterplugin.startup.FileListener"
+                  topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
+    </applicationListeners>
 </idea-plugin>

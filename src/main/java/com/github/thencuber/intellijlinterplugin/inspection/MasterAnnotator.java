@@ -58,7 +58,7 @@ public class MasterAnnotator implements Annotator {
     }
 
     private ArrayList<AnnotatorInformation> readConfig(Project project) {
-        StorageService projectService = project.getService(StorageService.class);
+        AnnotatorService projectService = project.getService(AnnotatorService.class);
         return projectService.getAnnotatorList();
     }
 }
