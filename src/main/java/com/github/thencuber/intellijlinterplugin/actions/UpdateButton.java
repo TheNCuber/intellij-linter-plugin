@@ -1,5 +1,6 @@
-package com.github.thencuber.intellijlinterplugin.inspection;
+package com.github.thencuber.intellijlinterplugin.actions;
 
+import com.github.thencuber.intellijlinterplugin.inspection.AnnotatorService;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;

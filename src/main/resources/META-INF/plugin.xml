@@ -12,7 +12,7 @@
                    implementationClass="com.github.thencuber.intellijlinterplugin.inspection.MasterAnnotator"/>
     </extensions>
     <actions>
-        <action id="intellijlinterplugin.inspection.UpdateButton" class="com.github.thencuber.intellijlinterplugin.inspection.UpdateButton"
+        <action id="intellijlinterplugin.inspection.UpdateButton" class="com.github.thencuber.intellijlinterplugin.actions.UpdateButton"
                 text="Update Linter" description="Update the linter using linter.xml" icon="AllIcons.Actions.Annotate">
             <add-to-group group-id="ToolbarRunGroup" anchor="first" />
         </action>
