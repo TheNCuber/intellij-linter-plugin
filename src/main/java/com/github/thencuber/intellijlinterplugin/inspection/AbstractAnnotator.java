@@ -1,14 +1,13 @@
 package com.github.thencuber.intellijlinterplugin.inspection;
 
 import com.intellij.lang.annotation.HighlightSeverity;
+import com.intellij.psi.PsiElement;
 
-public class AnnotatorInformation {
-    public java.util.regex.Pattern Pattern;
+public abstract class AbstractAnnotator {
     public String Note;
     public HighlightSeverity Severity;
 
-    public AnnotatorInformation(String RegexPatternString, String Note, String Severity) {
-        this.Pattern = java.util.regex.Pattern.compile(RegexPatternString);
+    public AbstractAnnotator(String Note, String Severity) {
         this.Note = Note;
         switch (Severity) {
             case "ERROR":
@@ -17,12 +16,13 @@ public class AnnotatorInformation {
             case "WARNING":
                 this.Severity = HighlightSeverity.WARNING;
                 break;
+            case "INFORMATION":
+                this.Severity = HighlightSeverity.INFORMATION;
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + Severity);
         }
     }
 
-    public Boolean checkMatch(String input) {
-        return input.matches(this.Pattern.pattern());
-    }
+    public abstract Boolean checkMatch(PsiElement input);
 }
