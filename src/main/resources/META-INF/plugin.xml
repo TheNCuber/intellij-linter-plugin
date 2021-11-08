@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.thencuber.intellijlinterplugin</id>
-    <name>IntelliJ IDEA Linter Plugin</name>
+    <name>SCG Linter</name>
     <vendor url="https://github.com/TheNCuber">Noah Bühlmann</vendor>
 
     <depends>com.intellij.java</depends>
@@ -11,8 +11,10 @@
         <annotator language="JAVA"
                    implementationClass="com.github.thencuber.intellijlinterplugin.inspection.MasterAnnotator"/>
     </extensions>
-    <applicationListeners>
-        <listener class="com.github.thencuber.intellijlinterplugin.startup.FileListener"
-                  topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
-    </applicationListeners>
+    <actions>
+        <action id="intellijlinterplugin.inspection.UpdateButton" class="com.github.thencuber.intellijlinterplugin.inspection.UpdateButton"
+                text="Update Linter" description="Update the linter using linter.xml" icon="AllIcons.Actions.Annotate">
+            <add-to-group group-id="ToolbarRunGroup" anchor="first" />
+        </action>
+    </actions>
 </idea-plugin>
