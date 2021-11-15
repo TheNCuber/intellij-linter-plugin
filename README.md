@@ -1,4 +1,4 @@
-# intellij-linter-plugin
+# X-Platform Java Linter
 
 ![Build](https://github.com/TheNCuber/intellij-linter-plugin/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
@@ -16,13 +16,14 @@
 
 <!-- Plugin description -->
 This IntelliJ Platform Plugin allows you to define custom platform-independent linters in a linter.xml config file in the .idea folder of your project.
+This plugin was built as a seminar project for the Software Composition Group at the University of Bern and serves as proof of concept.
 <!-- Plugin description end -->
 
 ## Installation
 
 - Using IDE built-in plugin system:
   
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "intellij-linter-plugin"</kbd> >
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "X-Platform Java Linter"</kbd> >
   <kbd>Install Plugin</kbd>
   
 - Manually:
