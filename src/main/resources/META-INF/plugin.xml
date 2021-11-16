@@ -1,12 +1,20 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<!-- Plugin Configuration File -->
 <idea-plugin>
     <id>com.github.thencuber.intellijlinterplugin</id>
-    <name>IntelliJ IDEA Linter Plugin</name>
+    <name>SCG Linter</name>
     <vendor url="https://github.com/TheNCuber">Noah Bühlmann</vendor>
 
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <annotator language="JAVA" implementationClass="com.github.thencuber.intellijlinterplugin.inspection.SimpleAnnotator"/>
+        <postStartupActivity implementation="com.github.thencuber.intellijlinterplugin.startup.PluginStartupActivity"/>
+        <annotator language="JAVA"
+                   implementationClass="com.github.thencuber.intellijlinterplugin.inspection.MasterAnnotator"/>
     </extensions>
+    <actions>
+        <action id="intellijlinterplugin.inspection.UpdateButton" class="com.github.thencuber.intellijlinterplugin.actions.UpdateButton"
+                text="Reload Linter Configuration" description="Update the linter configuration using linter.xml in .idea directory" icon="LinterIcons.Refresh_Icon">
+            <add-to-group group-id="ToolbarRunGroup" anchor="first" />
+        </action>
+    </actions>
 </idea-plugin>
