@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/18018-x-platform-java-linter.svg)](https://plugins.jetbrains.com/plugin/18018-x-platform-java-linter)
 
 <!-- Plugin description -->
-This IntelliJ Platform Plugin allows you to define custom platform-independent linters in a linter.xml config file in the .idea folder of your project.
+This IntelliJ-based Plugin allows you to define custom platform-independent linters in a linter.xml config file in the .idea folder of your project.
 This plugin was built as a seminar project for the Software Composition Group at the University of Bern and serves as proof of concept.
 <!-- Plugin description end -->
 
