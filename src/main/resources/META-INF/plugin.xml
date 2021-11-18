@@ -1,9 +1,10 @@
 <!-- Plugin Configuration File -->
 <idea-plugin>
     <id>com.github.thencuber.intellijlinterplugin</id>
-    <name>SCG Linter</name>
+    <name>X-Platform Java Linter</name>
     <vendor url="https://github.com/TheNCuber">Noah Bühlmann</vendor>
 
+    <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
