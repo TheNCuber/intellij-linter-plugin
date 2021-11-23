@@ -20,7 +20,13 @@ public class UpdateButton extends AnAction {
     public void update(AnActionEvent e) {
         // The duplicated code has to stay in here, because otherwise speed exceptions occur
         Project MyProject = e.getProject();
+        if(MyProject == null) {
+            return;
+        }
         String basePath = MyProject.getBasePath();
+        if(basePath == null) {
+            return;
+        }
         Path configPath = Paths.get(basePath, ".idea/linter.xml");
         e.getPresentation().setEnabledAndVisible(Files.exists(configPath));
     }
@@ -28,16 +34,22 @@ public class UpdateButton extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         Project MyProject = e.getProject();
-        Document configFile = FileDocumentManager.getInstance().getDocument(Objects.requireNonNull(VirtualFileManager.getInstance().findFileByNioPath(getConfigPath(MyProject))));
+        if(MyProject == null) {
+            return;
+        }
+        String basePath = MyProject.getBasePath();
+        if(basePath == null) {
+            return;
+        }
+        Path configPath = Paths.get(basePath, ".idea/linter.xml");
+        Document configFile = FileDocumentManager.getInstance().getDocument(Objects.requireNonNull(VirtualFileManager.getInstance().findFileByNioPath(configPath)));
+        if(configFile == null) {
+            return;
+        }
         FileDocumentManager.getInstance().saveDocument(configFile);
         AnnotatorService projectService = MyProject.getService(AnnotatorService.class);
         System.out.println("Linter update requested...");
         projectService.updateAnnotators();
         System.out.println("Linter update completed.");
-    }
-
-    private Path getConfigPath(Project p) {
-        String basePath = p.getBasePath();
-        return Paths.get(basePath, ".idea/linter.xml");
     }
 }

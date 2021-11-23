@@ -36,10 +36,16 @@ public final class AnnotatorService {
     public void updateAnnotators() {
         // Read config if possible
         String basePath = MyProject.getBasePath();
+        if(basePath == null) {
+            return;
+        }
         Path configPath = Paths.get(basePath, ".idea/linter.xml");
         if (Files.exists(configPath)) {
             System.out.println("Updating annotators using config file: " + configPath);
             VirtualFile configFile = VirtualFileManager.getInstance().findFileByNioPath(configPath);
+            if(configFile == null) {
+                return;
+            }
             try {
                 // DEBUG: Print full config file
                 // System.out.println(VfsUtil.loadText(configFile));
