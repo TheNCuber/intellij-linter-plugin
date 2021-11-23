@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Save linter.xml on pressing UpdateButton in toolbar
+- Improved null-safety on several occasions
 
 ## [1.0.0]
 ### Added
