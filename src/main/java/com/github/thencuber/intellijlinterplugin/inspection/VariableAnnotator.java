@@ -3,6 +3,8 @@ package com.github.thencuber.intellijlinterplugin.inspection;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiVariable;
 
+import java.util.Objects;
+
 public class VariableAnnotator extends AbstractAnnotator {
     private java.util.regex.Pattern Pattern;
     private String Type;
@@ -30,7 +32,7 @@ public class VariableAnnotator extends AbstractAnnotator {
         }
 
         if(this.Pattern != null) {
-            return variable.getName().matches(this.Pattern.pattern());
+            return Objects.requireNonNull(variable.getName()).matches(this.Pattern.pattern());
         }
 
         return true;

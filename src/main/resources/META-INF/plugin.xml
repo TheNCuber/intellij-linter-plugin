@@ -11,6 +11,7 @@
         <postStartupActivity implementation="com.github.thencuber.intellijlinterplugin.startup.PluginStartupActivity"/>
         <annotator language="JAVA"
                    implementationClass="com.github.thencuber.intellijlinterplugin.inspection.MasterAnnotator"/>
+        <notificationGroup id="X-Platform Java Linter" displayType="BALLOON"/>
     </extensions>
     <actions>
         <action id="intellijlinterplugin.inspection.UpdateButton" class="com.github.thencuber.intellijlinterplugin.actions.UpdateButton"

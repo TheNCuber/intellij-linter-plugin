@@ -3,6 +3,7 @@ package com.github.thencuber.intellijlinterplugin.inspection;
 import com.intellij.psi.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MethodAnnotator extends AbstractAnnotator {
     private java.util.regex.Pattern Pattern;
@@ -29,7 +30,7 @@ public class MethodAnnotator extends AbstractAnnotator {
 
         PsiMethod method = (PsiMethod) input;
         if(this.ReturnType != null) {
-            if(!(method.getReturnType().equalsToText(this.ReturnType))) {
+            if(!(Objects.requireNonNull(method.getReturnType()).equalsToText(this.ReturnType))) {
                 return false;
             }
         }
