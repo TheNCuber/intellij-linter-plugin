@@ -5,7 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Support class-syntax in linter.xml config file
+- Support class-syntax in linter.xml config file 
+- Added success and fail notifications for updating linting rules
 
 ### Changed
 - Save linter.xml on pressing UpdateButton in toolbar
