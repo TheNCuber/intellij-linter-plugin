@@ -1,6 +1,8 @@
 package com.github.thencuber.intellijlinterplugin.inspection;
 
+import com.github.thencuber.intellijlinterplugin.notifications.PluginNotification;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
+import com.intellij.notification.Notification;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -47,12 +49,16 @@ public final class AnnotatorService {
                 return;
             }
             try {
-                // DEBUG: Print full config file
-                // System.out.println(VfsUtil.loadText(configFile));
-
                 DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
+                try {
+                    builder.parse(configFile.getInputStream());
+                } catch(Exception e) {
+                    Notification failMessage = new PluginNotification(false, "Linter.xml is not a valid xml document.");
+                    failMessage.notify(MyProject);
+                    return;
+                }
                 Document document = builder.parse(configFile.getInputStream());
                 document.getDocumentElement().normalize();
                 ArrayList<AbstractAnnotator> Annotators = new ArrayList<>();
@@ -81,11 +87,17 @@ public final class AnnotatorService {
                 }
                 AnnotatorList = Annotators;
                 DaemonCodeAnalyzer.getInstance(MyProject).restart();
+                Notification successMessage = new PluginNotification(true);
+                successMessage.notify(MyProject);
             } catch (Exception e) {
-                e.printStackTrace();
+                Notification failMessage = new PluginNotification(false, "Linter.xml is not following the supported structure.");
+                failMessage.notify(MyProject);
             }
         } else {
             System.out.println("Did not find linter.xml config file at " + configPath);
+            AnnotatorList = new ArrayList<>();
+            Notification failMessage = new PluginNotification(false, "No linter.xml file was found at " + configPath + ". Please create it, for the plugin to work.");
+            failMessage.notify(MyProject);
         }
     }
 
